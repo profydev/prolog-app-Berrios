@@ -11,6 +11,7 @@ describe("Issue List", () => {
     cy.intercept("GET", "https://prolog-api.profy.dev/issue?page=1", {
       fixture: "issues-page-1.json",
     }).as("getIssuesPage1");
+    cy.wait(500);
     cy.intercept("GET", "https://prolog-api.profy.dev/issue?page=2", {
       fixture: "issues-page-2.json",
     }).as("getIssuesPage2");
