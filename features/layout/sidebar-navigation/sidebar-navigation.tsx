@@ -69,7 +69,7 @@ const Header = styled.header`
 `;
 
 const Logo = styled.img`
-  width: 7.375rem;
+  ${breakpoint("mobile") ? "width: 1rem" : "width: 7.375rem"}
 
   @media (min-width: ${breakpoint("desktop")}) {
     margin: ${space(0, 4)};
@@ -162,7 +162,7 @@ export function SidebarNavigation() {
         <Header>
           <Logo
             src={
-              isSidebarCollapsed
+              isSidebarCollapsed && breakpoint("mobile")
                 ? "/icons/logo-small.svg"
                 : "/icons/logo-large.svg"
             }
