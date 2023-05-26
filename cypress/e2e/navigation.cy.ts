@@ -35,12 +35,17 @@ describe("Sidebar Navigation", () => {
       // collapse navigation
       cy.get("nav").contains("Collapse").click();
 
-      // check that links still exist and are functionable
+      // check that links still exist and are functional
       cy.get("nav").find("a").should("have.length", 5).eq(1).click();
       cy.url().should("eq", "http://localhost:3000/dashboard/issues");
 
       // check that text is not rendered
       cy.get("nav").contains("Issues").should("not.exist");
+    });
+
+    it("Support button exists", () => {
+      // Get the Support button and assert that it exists
+      cy.get(".support-btn").find("button").should("exist");
     });
   });
 
@@ -60,7 +65,7 @@ describe("Sidebar Navigation", () => {
 
     function isNotInViewport(el: string) {
       cy.get(el).then(($el) => {
-        // naviation should be outside of the screen
+        // navigation should be outside of the screen
         const rect = $el[0].getBoundingClientRect();
         expect(rect.left).to.be.equal(-rect.width);
         expect(rect.right).to.be.equal(0);
