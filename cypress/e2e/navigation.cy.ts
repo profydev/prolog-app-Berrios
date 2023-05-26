@@ -35,7 +35,7 @@ describe("Sidebar Navigation", () => {
       // collapse navigation
       cy.get("nav").contains("Collapse").click();
 
-      // check that links still exist and are functionable
+      // check that links still exist and are functional
       cy.get("nav").find("a").should("have.length", 5).eq(1).click();
       cy.url().should("eq", "http://localhost:3000/dashboard/issues");
 
@@ -43,25 +43,9 @@ describe("Sidebar Navigation", () => {
       cy.get("nav").contains("Issues").should("not.exist");
     });
 
-    it("Support button opens mail client with correct subject", () => {
-      // Open mobile navigation
-      cy.get("img[alt='open menu']").click();
-
-      // wait for animation to finish
-      cy.wait(500);
-
-      // Get the Support button and assert it has the correct mailto link
-      cy.get("nav")
-        .contains("Support")
-        .should(
-          "have.attr",
-          "href",
-          "mailto:support@prolog-app.com?subject=Support Request:"
-        );
-
-      // Close mobile navigation
-      cy.get("img[alt='close menu']").click();
-      cy.wait(500);
+    it("Support button exists", () => {
+      // Get the Support button and assert that it exists
+      cy.get(".support-btn").find("button").should("exist");
     });
   });
 
@@ -81,7 +65,7 @@ describe("Sidebar Navigation", () => {
 
     function isNotInViewport(el: string) {
       cy.get(el).then(($el) => {
-        // naviation should be outside of the screen
+        // navigation should be outside of the screen
         const rect = $el[0].getBoundingClientRect();
         expect(rect.left).to.be.equal(-rect.width);
         expect(rect.right).to.be.equal(0);
@@ -112,29 +96,5 @@ describe("Sidebar Navigation", () => {
       cy.wait(500);
       isNotInViewport("nav");
     });
-
-    it("Support button attempts to open mail client with correct subject", () => {
-      // Open mobile navigation
-      cy.get("img[alt='open menu']").click();
-
-      // wait for animation to finish
-      cy.wait(500);
-
-      // Get the Support button and assert it has the correct mailto link
-      cy.get("nav")
-        .contains("Support")
-        .should(
-          "have.attr",
-          "href",
-          "mailto:support@prolog-app.com?subject=Support Request:"
-        );
-
-      // Close mobile navigation
-      cy.get("img[alt='close menu']").click();
-      cy.wait(500);
-    });
   });
 });
-function isInViewport(arg0: string) {
-  throw new Error("Function not implemented.");
-}

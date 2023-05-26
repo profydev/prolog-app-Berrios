@@ -152,9 +152,10 @@ const CollapseMenuItem = styled(MenuItemButton)`
   }
 `;
 const supportMail = () => {
-  window.location.href =
-    "mailto:support@prolog-app.com?subject=Support Request:";
-  return;
+  window.open(
+    "mailto:support@prolog-app.com?subject=Support Request:",
+    "_blank"
+  );
 };
 
 export function SidebarNavigation() {
@@ -195,10 +196,12 @@ export function SidebarNavigation() {
 
           <List>
             <MenuItemButton
+              data-testid="support-btn"
               text="Support"
               iconSrc="/icons/support.svg"
               isCollapsed={isSidebarCollapsed}
               onClick={() => supportMail()}
+              className="support-btn"
             />
             <CollapseMenuItem
               text="Collapse"
