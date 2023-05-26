@@ -91,5 +91,22 @@ describe("Sidebar Navigation", () => {
       cy.wait(500);
       isNotInViewport("nav");
     });
+
+    it("Support button opens mail client with correct subject", () => {
+      // Click on the Support button
+      cy.get("nav").contains("Support").click();
+
+      // Intercept the window location change
+      cy.window().then((win) => {
+        // Stub the window location change and validate it
+        cy.stub(win, "location").as("windowLocation");
+
+        // Now when you click, you can inspect the args given to "location"
+        cy.get("@windowLocation").should(
+          "be.calledWith",
+          "mailto:support@prolog-app.com?subject=Support Request:"
+        );
+      });
+    });
   });
 });
