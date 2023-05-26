@@ -42,6 +42,23 @@ describe("Sidebar Navigation", () => {
       // check that text is not rendered
       cy.get("nav").contains("Issues").should("not.exist");
     });
+
+    it("Support button opens mail client with correct subject", () => {
+      // Click on the Support button
+      cy.get("nav").contains("Support").click();
+
+      // Intercept the window location change
+      cy.window().then((win) => {
+        // Stub the window location change and validate it
+        cy.stub(win, "location").as("windowLocation");
+
+        // Now when you click, you can inspect the args given to "location"
+        cy.get("@windowLocation").should(
+          "be.calledWith",
+          "mailto:support@prolog-app.com?subject=Support Request:"
+        );
+      });
+    });
   });
 
   context("mobile resolution", () => {
@@ -93,6 +110,13 @@ describe("Sidebar Navigation", () => {
     });
 
     it("Support button opens mail client with correct subject", () => {
+      // Open mobile navigation
+      cy.get("img[alt='open menu']").click();
+
+      // wait for animation to finish
+      cy.wait(500);
+      isInViewport("nav");
+
       // Click on the Support button
       cy.get("nav").contains("Support").click();
 
@@ -107,6 +131,11 @@ describe("Sidebar Navigation", () => {
           "mailto:support@prolog-app.com?subject=Support Request:"
         );
       });
+
+      // Close mobile navigation
+      cy.get("img[alt='close menu']").click();
+      cy.wait(500);
+      isNotInViewport("nav");
     });
   });
 });
